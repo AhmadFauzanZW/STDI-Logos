@@ -1,16 +1,35 @@
-# This is a sample Python script.
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+from lxml import etree
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+url = "http://www.helmiau.com/stdiis/#kumpulan-logo"
 
+r = requests.get(url)
+Nama_Logo = []
+Preview_Link = []
+Image_Link = []
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+soup = BeautifulSoup(r.text, 'html5lib')
+table = soup.find_all('table')[-1]
+# print(table)
 
+rows = table.find_all('tr')[1:]
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+for i in rows:
+    nama = i.find_all('td')[0].text.strip()
+    Nama_Logo.append(nama)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    preview = i.find_all('img')[0].get('src')
+    Preview_Link.append(preview)
+
+    link = i.find_all('a')[0].get('href')
+    Image_Link.append(link)
+
+    print(nama)
+    print(preview)
+    print(link)
+
+print(Nama_Logo)
+print(Preview_Link)
+print(Image_Link)
