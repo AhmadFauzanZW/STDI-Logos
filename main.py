@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-from lxml import etree
 
 url = "http://www.helmiau.com/stdiis/#kumpulan-logo"
 
@@ -33,3 +32,13 @@ for i in rows:
 print(Nama_Logo)
 print(Preview_Link)
 print(Image_Link)
+
+data = {
+    'Nama Logo': Nama_Logo,
+    'Link Logo': Image_Link
+}
+
+df = pd.DataFrame(data, index=range(1, len(Nama_Logo) + 1))
+print(df)
+
+df.to_excel('STDI Logos.xlsx')
