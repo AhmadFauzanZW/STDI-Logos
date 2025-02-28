@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import streamlit as st
 
 url = "http://www.helmiau.com/stdiis/#kumpulan-logo"
 
@@ -41,4 +42,12 @@ data = {
 df = pd.DataFrame(data, index=range(1, len(Nama_Logo) + 1))
 print(df)
 
-df.to_excel('STDI Logos.xlsx')
+# df.to_excel('STDI Logos.xlsx')
+st.set_page_config(
+    page_title='STDI Scraper',
+    layout="wide"
+)
+st.title("STDI Logos - Scraper")
+st.divider()
+st.table(df)
+
